@@ -34,15 +34,8 @@ import {
   layoutFourPerSheet,
   main,
 } from "./pdf-extract-and-layout.js";
-if (process.argv.length !== 5) {
-  console.log("Usage: node index.js input.csv input.pdf output_dir_or_file");
-  process.exit(1);
-}
 
-const csvPath = process.argv[2];
-const pdfPath = process.argv[3];
-const outputArg = process.argv[4];
-
+// Library function: concatenate multiple PDFs into one
 async function concatenatePDFs(pdfPaths, outputFile) {
   const mergedPdf = await PDFDocument.create();
   for (const pdfPath of pdfPaths) {
@@ -55,7 +48,17 @@ async function concatenatePDFs(pdfPaths, outputFile) {
   await fs.writeFile(outputFile, mergedBytes);
 }
 
-async function runAll() {
+// CLI entrypoint logic
+async function cli() {
+  if (process.argv.length !== 5) {
+    console.log("Usage: node index.js input.csv input.pdf output_dir_or_file");
+    process.exit(1);
+  }
+
+  const csvPath = process.argv[2];
+  const pdfPath = process.argv[3];
+  const outputArg = process.argv[4];
+
   const csvData = await fs.readFile(csvPath, "utf8");
   const records = parse(csvData, {
     columns: true,
@@ -101,5 +104,10 @@ async function runAll() {
   }
 }
 
-runAll();
+// Only run CLI if called directly
+if (process.argv[1] && process.argv[1].endsWith("index.js")) {
+  cli();
+}
+
+// Export library functions
 export { concatenatePDFs, extractPages, layoutFourPerSheet, main };
