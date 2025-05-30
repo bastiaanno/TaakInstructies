@@ -68,6 +68,14 @@ async function layoutFourPerSheet(pdfDoc, name) {
   return outPdf;
 }
 
+/**
+ * Main CLI function.
+ * @param {string} csvPath - Path to the CSV file.
+ * @param {string} pdfPath - Path to the source PDF file.
+ * @param {string} outputPath - Path to write the output PDF.
+ * @param {number} [rowIndex=0] - Index of the CSV row to use.
+ * @returns {Promise<void>}
+ */
 async function main(csvPath, pdfPath, outputPath, rowIndex = 0) {
   const csvData = await fs.readFile(csvPath, "utf8");
   const records = parse(csvData, {
