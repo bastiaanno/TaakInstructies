@@ -2,6 +2,13 @@
 import fs from "fs-extra";
 import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
 import { parse } from "csv-parse/sync";
+
+/**
+ * Extracts specific pages from a PDF.
+ * @param {Uint8Array|ArrayBuffer|Buffer} pdfBytes - The PDF file bytes.
+ * @param {number[]} pageNumbers - Array of 1-based page numbers to extract.
+ * @returns {Promise<import("pdf-lib").PDFDocument>} A new PDFDocument with the extracted pages.
+ */
 async function extractPages(pdfBytes, pageNumbers) {
   const srcPdf = await PDFDocument.load(pdfBytes);
   const newPdf = await PDFDocument.create();
@@ -12,6 +19,12 @@ async function extractPages(pdfBytes, pageNumbers) {
   return newPdf;
 }
 
+/**
+ * Arranges PDF pages 4 per A4 sheet.
+ * @param {import("pdf-lib").PDFDocument} pdfDoc - The PDFDocument to layout.
+ * @param {string} name - Optional name to print on the first sheet.
+ * @returns {Promise<import("pdf-lib").PDFDocument>} The new PDFDocument with arranged layout.
+ */
 async function layoutFourPerSheet(pdfDoc, name) {
   const pages = pdfDoc.getPages();
   const total = pages.length;
