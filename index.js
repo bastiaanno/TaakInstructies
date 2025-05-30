@@ -33,7 +33,7 @@ import {
   extractPages,
   layoutFourPerSheet,
   main,
-} from "./pdf-extract-and-layout";
+} from "./pdf-extract-and-layout.js";
 if (process.argv.length !== 5) {
   console.log("Usage: node index.js input.csv input.pdf output_dir_or_file");
   process.exit(1);
