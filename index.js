@@ -26,7 +26,11 @@
  * The main PDF generation logic is delegated to the 'main' function in pdf_extract_and_layout.js.
  */
 
-import { main } from "./pdf_extract_and_layout.js";
+import {
+  main,
+  extractPages,
+  layoutFourPerSheet,
+} from "./pdf_extract_and_layout.js";
 import fs from "fs-extra";
 import { parse } from "csv-parse/sync";
 import { PDFDocument } from "pdf-lib";
@@ -99,3 +103,4 @@ async function runAll() {
 }
 
 runAll();
+export { extractPages, layoutFourPerSheet, main, concatenatePDFs };
